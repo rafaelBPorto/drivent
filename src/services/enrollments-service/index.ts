@@ -1,19 +1,18 @@
 import { request } from "@/utils/request";
-import { notFoundError, requestError } from "@/errors";
+import { notFoundError } from "@/errors";
 import addressRepository, { CreateAddressParams } from "@/repositories/address-repository";
 import enrollmentRepository, { CreateEnrollmentParams } from "@/repositories/enrollment-repository";
 import { exclude } from "@/utils/prisma-utils";
 import { Address, Enrollment } from "@prisma/client";
 
 async function getAddressFromCEP(cep: string) {
-
-  const normalizeCep = cep.replace(/[^0-9]/g,'')
+  const normalizeCep = cep.replace(/[^0-9]/g, "");
   const result = await request.get(`https://viacep.com.br/ws/${normalizeCep}/json/`);
- 
+
   if (!result.data || result.data.erro) {
     throw notFoundError();
   }
-  return result.data
+  return result.data;
 }
 
 async function getOneWithAddressByUserId(userId: number): Promise<GetOneWithAddressByUserIdResult> {

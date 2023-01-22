@@ -186,9 +186,7 @@ describe("POST /enrollments", () => {
         );
       });
     });
-
     describe("when body is invalid", () => {
-      
       const generateInvalidBody = () => ({
         name: faker.name.findName(),
         cpf: generateCPF(),
